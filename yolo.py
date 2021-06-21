@@ -2,7 +2,7 @@
 from model.YOLOv3 import YOLOv3
 import cv2
 import numpy as np
-
+from funcs.helper import get_iou
 with open("./model/cfg/coco.names") as f:
     classes = f.read().splitlines()
 
@@ -20,6 +20,24 @@ def yolo_detect(img_path):
     return obj_list
 
 
+def compare(img_path1,img_path2):
+
+    obj_list1=yolo_detect(img_path1)
+    obj_list2=yolo_detect(img_path2)
+
+    score=0
+    print(len(obj_list1))
+    print(len(obj_list2))
+    for i,obj1 in enumerate(obj_list1):
+        for j,obj2 in enumerate(obj_list2):
+            iou=get_iou(obj1[2],obj2[2])
+            score = score+1 if iou>0.7 else score
+            if iou>0.7:
+                print("compare {}and{}  species:{},{} iou:{}".format(i,j,obj1[0],obj2[0],iou))
+    print(score)
+    return score
+p="./data/004545.jpg"
+compare(p,p)
 def demo():
 
 
@@ -54,7 +72,7 @@ def demo():
     #print(bbox[0])
 
 
-if __name__ == "__main__":
-    pass
+# if __name__ == "__main__":
+#     pass
     #demo()
 #yolo = YOLOv3("cfg/yolo_v3.cfg", "weight/yolov3.weights", "cfg/coco.names")

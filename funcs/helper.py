@@ -13,13 +13,16 @@ def get_iou(box1, box2):
         s1 = (b1_x2 - b1_x1) * (b1_y2 - b1_y1)
         s2 = (b2_x2 - b2_x1) * (b2_y2 - b2_y1)
 
-        intersection = (b1_x2 - b2_x1) * (b1_y2 - b2_y1)
+        (left_point,top_point)=(b1_x1,b1_y1) if b1_x1>b1_x2 else (b2_x1,b2_y1)
+        (right_point,bottom_point)=(b1_x2,b1_y2) if b1_x2<b2_x2 else (b2_x2,b2_y2)
+        intersection =(right_point-left_point)*(bottom_point-top_point)
+        # intersection = (b1_x2 - b2_x1) * (b1_y2 - b2_y1)
 
         iou = intersection / (s1 + s2 - intersection)
 
     return iou
 
 
-def get_two_img_score(imgInfo1, imgInfo2):
-
-    img1_list=imgInfo1
+# def get_two_img_score(imgInfo1, imgInfo2):
+#
+#     img1_list=imgInfo1
