@@ -19,7 +19,7 @@ class YOLOv3(object):
         self.net.to(self.device)
 
         # constants
-        self.size = self.net.width, self.net.height
+        self.size = self.net.width, self.net.height#
         self.score_thresh = score_thresh
         self.conf_thresh = conf_thresh
         self.nms_thresh = nms_thresh
